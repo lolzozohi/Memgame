@@ -6,10 +6,20 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+    background-color: #333;
+    color: #fff;
 }
 
 .game-container {
     text-align: center;
+}
+
+.hidden {
+    display: none;
 }
 
 #try-count {
@@ -62,5 +72,34 @@ body {
 
 .card .back {
     background-color: #ccc;
+}
+
+body.dark-mode .card.flipped {
+    background-color: #333;
+}
+
+body.dark-mode .card .back {
+    background-color: #666;
+}
+
+#win-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    z-index: 1000;
+    transition: opacity 0.3s;
+}
+
+#win-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
