@@ -1,19 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
     const gameBoard = document.getElementById('game-board');
     const restartButton = document.getElementById('restart-button');
+    const tryCountDisplay = document.getElementById('try-count');
     const cardSymbols = ['🍎', '🍌', '🍓', '🍉', '🍇', '🍒', '🍍', '🥝'];
     let cards = [];
     let flippedCards = [];
     let matchedCards = [];
+    let tryCount = 0;
+    const maxTries = 20;
 
     function createBoard() {
         cards = shuffle([...cardSymbols, ...cardSymbols]);
         gameBoard.innerHTML = '';
+        tryCount = 0;
+        tryCountDisplay.textContent = `Tries: ${tryCount}`;
         cards.forEach(symbol => {
             const card = document.createElement('div');
             card.classList.add('card');
             card.dataset.symbol = symbol;
-            card.innerHTML = symbol;
+
+            const frontFace = document.createElement('div');
+            frontFace.classList.add('front');
+            frontFace.textContent = symbol;
+
+            const backFace = document.createElement('div');
+            backFace.classList.add('back');
+
+            card.appendChild(frontFace);
+            card.appendChild(backFace);
+
             card.addEventListener('click', flipCard);
             gameBoard.appendChild(card);
         });
@@ -28,11 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function flipCard() {
-        if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
+        if (flippedCards.length < 2 && !this.classList.contains('flipped') && tryCount < maxTries) {
             this.classList.add('flipped');
             flippedCards.push(this);
 
             if (flippedCards.length === 2) {
+                tryCount++;
+                tryCountDisplay.textContent = `Tries: ${tryCount}`;
                 checkMatch();
             }
         }
@@ -53,10 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 flippedCards = [];
             }, 1000);
         }
+
+        if (tryCount >= maxTries && matchedCards.length < cards.length) {
+            setTimeout(() => alert('Game over! You have reached the maximum number of tries.'), 500);
+        }
     }
 
     restartButton.addEventListener('click', createBoard);
 
     createBoard();
 });
-
