@@ -16,11 +16,19 @@
         <label>
             <input type="checkbox" id="dark-mode-switch"> Dark Mode
         </label>
+        <label>
+            Background Music Volume: 
+            <input type="range" id="volume-control" min="0" max="1" step="0.1" value="0.5">
+        </label>
     </div>
     <div id="win-screen" class="hidden">
         <h1>Congratulations! You won!</h1>
         <button id="play-again-button">Play Again</button>
     </div>
+    <audio id="background-music" loop>
+        <source src="background-music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
     <script src="script.js"></script>
 </body>
 </html>
