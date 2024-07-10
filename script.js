@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const darkModeSwitch = document.getElementById('dark-mode-switch');
     const winScreen = document.getElementById('win-screen');
     const playAgainButton = document.getElementById('play-again-button');
+    const volumeControl = document.getElementById('volume-control');
+    const backgroundMusic = document.getElementById('background-music');
     const cardSymbols = ['🍎', '🍌', '🍓', '🍉', '🍇', '🍒', '🍍', '🥝'];
     let cards = [];
     let flippedCards = [];
@@ -90,6 +92,13 @@ document.addEventListener('DOMContentLoaded', () => {
     darkModeSwitch.addEventListener('change', (e) => {
         document.body.classList.toggle('dark-mode', e.target.checked);
     });
+
+    volumeControl.addEventListener('input', (e) => {
+        backgroundMusic.volume = e.target.value;
+    });
+
+    backgroundMusic.volume = volumeControl.value;
+    backgroundMusic.play();
 
     createBoard();
 });
