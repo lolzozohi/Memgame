@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameBoard = document.getElementById('game-board');
     const restartButton = document.getElementById('restart-button');
     const tryCountDisplay = document.getElementById('try-count');
+    const darkModeSwitch = document.getElementById('dark-mode-switch');
+    const winScreen = document.getElementById('win-screen');
+    const playAgainButton = document.getElementById('play-again-button');
     const cardSymbols = ['🍎', '🍌', '🍓', '🍉', '🍇', '🍒', '🍍', '🥝'];
     let cards = [];
     let flippedCards = [];
@@ -14,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gameBoard.innerHTML = '';
         tryCount = 0;
         tryCountDisplay.textContent = `Tries: ${tryCount}`;
+        winScreen.classList.add('hidden');
         cards.forEach(symbol => {
             const card = document.createElement('div');
             card.classList.add('card');
@@ -61,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
             matchedCards.push(card1, card2);
             flippedCards = [];
             if (matchedCards.length === cards.length) {
-                setTimeout(() => alert('Congratulations! You won!'), 500);
+                setTimeout(showWinScreen, 500);
             }
         } else {
             setTimeout(() => {
@@ -76,7 +80,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function showWinScreen() {
+        winScreen.classList.remove('hidden');
+    }
+
     restartButton.addEventListener('click', createBoard);
+    playAgainButton.addEventListener('click', createBoard);
+    
+    darkModeSwitch.addEventListener('change', (e) => {
+        document.body.classList.toggle('dark-mode', e.target.checked);
+    });
 
     createBoard();
 });
