@@ -20,13 +20,23 @@
             Background Music Volume: 
             <input type="range" id="volume-control" min="0" max="1" step="0.1" value="0.5">
         </label>
+        <label>
+            Choose Background Music:
+            <select id="music-selector">
+                <option value="background-music1.mp3">Vegeta Super Saiyan</option>
+                <option value="background-music2.mp3">Not Like Us</option>
+                <option value="background-music3.mp3">Spider-man</option>
+                <option value="background-music4.mp3">Hellwalker</option>
+                <option value="background-music5.mp3">Red Scale</option>
+            </select>
+        </label>
     </div>
     <div id="win-screen" class="hidden">
         <h1>Congratulations! You won!</h1>
         <button id="play-again-button">Play Again</button>
     </div>
     <audio id="background-music" loop>
-        <source src="background-music.mp3" type="audio/mpeg">
+        <source src="background-music1.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
     <script src="script.js"></script>
