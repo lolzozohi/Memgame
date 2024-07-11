@@ -8,19 +8,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const volumeControl = document.getElementById('volume-control');
     const backgroundMusic = document.getElementById('background-music');
     const musicSelector = document.getElementById('music-selector');
-    const cardSymbols = ['🍎', '🍌', '🍓', '🍉', '🍇', '🍒', '🍍', '🥝'];
+    const levelSelector = document.getElementById('level-selector');
+    const cardSymbols = ['🍎', '🍌', '🍓', '🍉', '🍇', '🍒', '🍍', '🥝', '🍋', '🍑', '🍈', '🍏', '🍐', '🍊', '🍍'];
     let cards = [];
     let flippedCards = [];
     let matchedCards = [];
     let tryCount = 0;
-    const maxTries = 20;
+    let maxTries = 20;
 
-    function createBoard() {
-        cards = shuffle([...cardSymbols, ...cardSymbols]);
+    function setMaxTries(level) {
+        if (level === 2) {
+            maxTries = 4;
+        } else if (level === 4) {
+            maxTries = 20;
+        } else if (level === 6) {
+            maxTries = 25;
+        }
+    }
+
+    function createBoard(size) {
+        setMaxTries(size);
+        const symbolCount = (size * size) / 2;
+        const symbols = cardSymbols.slice(0, symbolCount);
+        cards = shuffle([...symbols, ...symbols]);
+        gameBoard.style.gridTemplateColumns = `repeat(${size}, 100px)`;
+        gameBoard.style.gridTemplateRows = `repeat(${size}, 100px)`;
         gameBoard.innerHTML = '';
         tryCount = 0;
         tryCountDisplay.textContent = `Tries: ${tryCount}`;
         winScreen.classList.add('hidden');
+        matchedCards = [];
         cards.forEach(symbol => {
             const card = document.createElement('div');
             card.classList.add('card');
@@ -79,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (tryCount >= maxTries && matchedCards.length < cards.length) {
-            setTimeout(() => alert('Game over! You have reached the maximum number of tries. Please restart the game and try again.'), 500);
+            setTimeout(() => alert('Game over! You have reached the maximum number of tries.'), 500);
         }
     }
 
@@ -87,8 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
         winScreen.classList.remove('hidden');
     }
 
-    restartButton.addEventListener('click', createBoard);
-    playAgainButton.addEventListener('click', createBoard);
+    restartButton.addEventListener('click', () => createBoard(parseInt(levelSelector.value)));
+    playAgainButton.addEventListener('click', () => createBoard(parseInt(levelSelector.value)));
 
     darkModeSwitch.addEventListener('change', (e) => {
         document.body.classList.toggle('dark-mode', e.target.checked);
@@ -103,8 +120,10 @@ document.addEventListener('DOMContentLoaded', () => {
         backgroundMusic.play();
     });
 
+    levelSelector.addEventListener('change', () => createBoard(parseInt(levelSelector.value)));
+
     backgroundMusic.volume = volumeControl.value;
     backgroundMusic.play();
 
-    createBoard();
+    createBoard(parseInt(levelSelector.value));
 });
