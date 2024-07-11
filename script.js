@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const playAgainButton = document.getElementById('play-again-button');
     const volumeControl = document.getElementById('volume-control');
     const backgroundMusic = document.getElementById('background-music');
+    const musicSelector = document.getElementById('music-selector');
     const cardSymbols = ['🍎', '🍌', '🍓', '🍉', '🍇', '🍒', '🍍', '🥝'];
     let cards = [];
     let flippedCards = [];
@@ -78,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (tryCount >= maxTries && matchedCards.length < cards.length) {
-            setTimeout(() => alert('Game over! You have reached the maximum number of tries.'), 500);
+            setTimeout(() => alert('Game over! You have reached the maximum number of tries. Please restart the game and try again.'), 500);
         }
     }
 
@@ -88,13 +89,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     restartButton.addEventListener('click', createBoard);
     playAgainButton.addEventListener('click', createBoard);
-    
+
     darkModeSwitch.addEventListener('change', (e) => {
         document.body.classList.toggle('dark-mode', e.target.checked);
     });
 
     volumeControl.addEventListener('input', (e) => {
         backgroundMusic.volume = e.target.value;
+    });
+
+    musicSelector.addEventListener('change', (e) => {
+        backgroundMusic.src = e.target.value;
+        backgroundMusic.play();
     });
 
     backgroundMusic.volume = volumeControl.value;
