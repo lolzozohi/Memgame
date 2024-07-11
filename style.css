@@ -9,6 +9,23 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
+.game-container {
+  text-align: center;
+  transition: margin-top 0.3s;
+}
+
+.game-container.small {
+  margin-top: 50px;
+}
+
+.game-container.medium {
+  margin-top: 100px;
+}
+
+.game-container.large {
+  margin-top: 500px;
+}
+
 body.dark-mode {
   background-color: #333;
   color: #fff;
@@ -29,7 +46,6 @@ body.dark-mode {
 
 .game-board {
   display: grid;
-  grid-template-columns: repeat(4, 100px);
   grid-gap: 10px;
   margin-bottom: 20px;
 }
