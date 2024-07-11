@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const gameBoard = document.getElementById('game-board');
+    const gameContainer = document.querySelector('.game-container');
     const restartButton = document.getElementById('restart-button');
     const tryCountDisplay = document.getElementById('try-count');
     const darkModeSwitch = document.getElementById('dark-mode-switch');
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createBoard(size) {
         setMaxTries(size);
+        adjustContainerMargin(size);
         const symbolCount = (size * size) / 2;
         const symbols = cardSymbols.slice(0, symbolCount);
         cards = shuffle([...symbols, ...symbols]);
@@ -56,6 +58,17 @@ document.addEventListener('DOMContentLoaded', () => {
             card.addEventListener('click', flipCard);
             gameBoard.appendChild(card);
         });
+    }
+
+    function adjustContainerMargin(size) {
+        gameContainer.classList.remove('small', 'medium', 'large');
+        if (size === 2) {
+            gameContainer.classList.add('small');
+        } else if (size === 4) {
+            gameContainer.classList.add('medium');
+        } else if (size === 6) {
+            gameContainer.classList.add('large');
+        }
     }
 
     function shuffle(array) {
