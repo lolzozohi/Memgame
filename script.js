@@ -10,7 +10,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const backgroundMusic = document.getElementById('background-music');
     const musicSelector = document.getElementById('music-selector');
     const levelSelector = document.getElementById('level-selector');
-    const cardSymbols = ['🍎', '🍌', '🍓', '🍉', '🍇', '🍒', '🍍', '🥝', '🍋', '🍑', '🍈', '🍏', '🍐', '🍊', '🍍'];
+    const symbolSelector = document.getElementById('symbol-selector');
+    
+    const foodSymbols = ['🍎', '🍌', '🍓', '🍉', '🍇', '🍒', '🍍', '🥝', '🍋', '🍑', '🍈', '🍏', '🍐', '🍊', '🥥','🫐','🧄','🧅'];
+    const peopleSymbols = ['😀', '😂', '😅', '😍', '😎', '😭', '😡', '😱', '😜', '🤔', '🙄', '😴', '🤤', '😷', '🤢','😈','🤬','🤯'];
+    const flagSymbols = ['🏴‍☠️', '🇧🇩', '🇦🇷', '🇮🇳', '🇯🇵', '🇲🇽', '🇺🇸', '🇰🇷', '🇯🇲', '🇭🇷', '🇩🇪', '🇺🇾', '🇪🇺', '🇨🇳', '🇧🇪','🇨🇦','🇦🇺','🇦🇫'];
+    const sportSymbols = ['⚽️', '🏀', '🏈', '⚾️', '🎾', '🏐', '🥋', '🏏', '🥊', '🎳', '🏹', '🥏', '🎱', '🏸', '🛷','🏒','🚴‍♂️','🤺'];
+    const vehicleSymbols = ['🚎', '🚋', '🚙', '🚕', '🚗', '🏎️', '🚑', '🚓', '🚒', '🚜', '🛵', '🏍️', '🛺', '✈️', '🚢','🚁','🚀','🚤'];
+    
+    
     let cards = [];
     let flippedCards = [];
     let matchedCards = [];
@@ -30,8 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function createBoard(size) {
         setMaxTries(size);
         adjustContainerMargin(size);
-        const symbolCount = (size * size) / 2;
-        const symbols = cardSymbols.slice(0, symbolCount);
+        const symbols = getSelectedSymbols().slice(0, (size * size) / 2);
         cards = shuffle([...symbols, ...symbols]);
         gameBoard.style.gridTemplateColumns = `repeat(${size}, 100px)`;
         gameBoard.style.gridTemplateRows = `repeat(${size}, 100px)`;
@@ -58,6 +65,22 @@ document.addEventListener('DOMContentLoaded', () => {
             card.addEventListener('click', flipCard);
             gameBoard.appendChild(card);
         });
+    }
+
+    function getSelectedSymbols() {
+        if (symbolSelector.value === 'people') {
+            return peopleSymbols;
+        }
+        else if (symbolSelector.value === 'flags') {
+            return flagSymbols;
+        }
+        else if (symbolSelector.value === 'sports') {
+            return sportSymbols;
+        }
+        else if (symbolSelector.value === 'vehicles') {
+            return vehicleSymbols;
+        }
+        return foodSymbols;
     }
 
     function adjustContainerMargin(size) {
@@ -134,9 +157,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     levelSelector.addEventListener('change', () => createBoard(parseInt(levelSelector.value)));
+    symbolSelector.addEventListener('change', () => createBoard(parseInt(levelSelector.value)));
 
     backgroundMusic.volume = volumeControl.value;
     backgroundMusic.play();
 
     createBoard(parseInt(levelSelector.value));
 });
+
