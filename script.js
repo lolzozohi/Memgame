@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (level === 4) {
             maxTries = 20;
         } else if (level === 6) {
-            maxTries = 25;
+            maxTries = 35;
         }
     }
 
